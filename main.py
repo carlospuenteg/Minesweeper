@@ -8,6 +8,7 @@ alpha = "abcdefghijklmnopqrstuvwyz"
 
 
 def start():
+    global land, size, visLand, mines
     #-----------------------------------------------------------------------------
     print("\nThis program allows you to see how minesweeper works\n")
     size = int(input("Size (e.g.: 5): "))
@@ -17,7 +18,6 @@ def start():
     for x in range(size):
         land.append([None]*size)
         visLand.append(["�"]*size)
-    play = True
     #-----------------------------------------------------------------------------
     difficulty = input("Difficulty (e-Easy, m-Medium, h-Hard, g-God): ").lower()
     if (difficulty == "e"): 
@@ -38,7 +38,30 @@ def start():
         x = minesLoc[i]//size  # 11//4 = 2
         y = minesLoc[i]%size  # 11%4 = 3
         land[x][y] = "⨀"
+    #-----------------------------------------------------------------------------
+    fillLand()
+    playGame()
 
+
+##################################################################################
+
+def visualize(land,size):
+    vis = "\n   "
+    for x in range(size):
+        vis += " " + alpha[x] + " "
+    vis += " \n"
+
+    for x in range(size):
+        vis += alpha[x].upper() + " |"
+        for y in range(size):
+            if (str(land[x][y]) == "�"): vis += (" " + str(land[x][y]) + " ")
+            else: vis += (" " + Fore.LIGHTCYAN_EX+str(land[x][y]) + Fore.RESET + " ")
+        vis += "|\n"
+    print(vis)
+
+##################################################################################
+
+def fillLand():
     for i in range(size):
         for j in range(size):
             nMines = 0
@@ -86,7 +109,10 @@ def start():
 
                 land[i][j] = nMines
 
-    #-----------------------------------------------------------------------------
+##################################################################################
+
+def playGame():
+    play = True
     while play:
         visualize(visLand,size)
         print("\nThere are "+Fore.LIGHTCYAN_EX+str(mines)+Fore.RESET+" mines\n")
@@ -119,20 +145,6 @@ def start():
 
 
 ##################################################################################
-
-def visualize(land,size):
-    vis = "\n   "
-    for x in range(size):
-        vis += " " + alpha[x] + " "
-    vis += " \n"
-
-    for x in range(size):
-        vis += alpha[x].upper() + " |"
-        for y in range(size):
-            if (str(land[x][y]) == "�"): vis += (" " + str(land[x][y]) + " ")
-            else: vis += (" " + Fore.LIGHTCYAN_EX+str(land[x][y]) + Fore.RESET + " ")
-        vis += "|\n"
-    print(vis)
 
 while True:
     start()
