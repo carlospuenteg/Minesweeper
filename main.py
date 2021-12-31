@@ -1,5 +1,7 @@
 import random
 
+# pyinstaller --onefile main.py
+
 def start():
     print("\nThis program allows you to see how minesweeper works\n")
     size = int(input("Size (e.g.: 5): "))
@@ -77,9 +79,14 @@ def start():
     visualize(land,size)
 
 def visualize(land,size):
-    vis = "\n"
+    alpha = "abcdefghijklmnopqrstuvwyz"
+    vis = "\n   "
     for x in range(size):
-        vis += "|"
+        vis += " " + alpha[x] + " "
+    vis += " \n"
+
+    for x in range(size):
+        vis += alpha[x].upper() + " |"
         for y in range(size):
             vis += (" " + str(land[x][y]) + " ")
         vis += "|\n"
