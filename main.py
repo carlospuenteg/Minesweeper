@@ -1,4 +1,5 @@
 import random
+import time
 from colorama import init, Fore, Back
 init(autoreset=True)
 
@@ -8,7 +9,7 @@ alpha = "abcdefghijklmnopqrstuvwyz"
 
 
 def start():
-    global land, size, visLand, mines
+    global land, size, visLand, mines, difficulty
     #-----------------------------------------------------------------------------
     print("\nThis program allows you to see how minesweeper works\n")
     size = int(input("Size (e.g.: 5): "))
@@ -147,7 +148,15 @@ def playGame():
 ##################################################################################
 
 while True:
+    t1 = round(time.time() * 1000)
     start()
-    r = input("Type 1 to play again: ")
+    t2 = round(time.time() * 1000)
+    if (difficulty=="e"): diff = "EASY"
+    elif (difficulty=="m"): diff = "MEDIUM"
+    elif (difficulty=="h"): diff = "HARD"
+    elif (difficulty=="g"): diff = "GOD"
+    print("Finished a "+str(size)+"x"+str(size)+" "+diff+" game in "+str(round((t2-t1)/1000,2))+" seconds")
+
+    r = input("\nType 1 to play again: ")
     if (r != "1"):
         break
