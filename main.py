@@ -1,8 +1,11 @@
 import random
+from colorama import init, Fore, Back
+init(autoreset=True)
 
 # pyinstaller --onefile main.py
 
 alpha = "abcdefghijklmnopqrstuvwyz"
+
 
 def start():
     #-----------------------------------------------------------------------------
@@ -16,7 +19,7 @@ def start():
         visLand.append(["�"]*size)
     play = True
     #-----------------------------------------------------------------------------
-    difficulty = input("Difficulty (E-Easy, M-Medium, H-Hard, G-God): ").lower()
+    difficulty = input("Difficulty (e-Easy, m-Medium, h-Hard, g-God): ").lower()
     if (difficulty == "e"): 
         mines = int(0.2*size**2)
     elif (difficulty == "m"):
@@ -86,7 +89,7 @@ def start():
     #-----------------------------------------------------------------------------
     while play:
         visualize(visLand,size)
-        print("\nThere are "+str(mines)+" mines")
+        print("\nThere are "+Fore.LIGHTCYAN_EX+str(mines)+Fore.RESET+" mines\n")
         while True:
             loc = input("What location do you want to choose? (e.g. Aa): ").lower()
             loc_x = alpha.index(loc[0])
@@ -99,7 +102,7 @@ def start():
         if (visLand[loc_x][loc_y] == "�"):
             if (land[loc_x][loc_y] == "⨀"):
                 play = False
-                print("\n YOU LOST \n")
+                print("\n"+Fore.LIGHTRED_EX+"YOU LOST \n")
             else:
                 visLand[loc_x][loc_y] = land[loc_x][loc_y]
         else:
@@ -111,7 +114,7 @@ def start():
                 if (visLand[x][y] == "�"): locLeft += 1
         if (locLeft == mines):
             visualize(visLand,size)
-            print("\nYOU WON!\n")
+            print("\n"+Fore.GREEN+"YOU WON!\n")
             play = False
 
 
@@ -126,8 +129,13 @@ def visualize(land,size):
     for x in range(size):
         vis += alpha[x].upper() + " |"
         for y in range(size):
-            vis += (" " + str(land[x][y]) + " ")
+            if (str(land[x][y]) == "�"): vis += (" " + str(land[x][y]) + " ")
+            else: vis += (" " + Fore.LIGHTCYAN_EX+str(land[x][y]) + Fore.RESET + " ")
         vis += "|\n"
     print(vis)
 
-start()
+while True:
+    start()
+    r = input("Type 1 to play again: ")
+    if (r != "1"):
+        break
