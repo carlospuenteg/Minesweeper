@@ -1,5 +1,6 @@
 import random
 import time
+
 try:
     from colorama import init, Fore, Back
     init(autoreset=True)
@@ -8,18 +9,36 @@ try:
     green = Fore.GREEN
     res = Fore.RESET
 except:
-    blue = red = green = res = ""
+    if (int(input("\nYou don't have colorama installed, do you want to install it? (Type 1 if you do): "))==1):
+        try:
+            import pip
+            pip.main(['install','colorama'])
+            from colorama import init, Fore, Back
+            init(autoreset=True)
+            blue = Fore.LIGHTCYAN_EX
+            red = Fore.LIGHTRED_EX
+            green = Fore.GREEN
+            res = Fore.RESET
+        except:
+            blue = red = green = res = ""
+    else:
+        blue = red = green = res = ""
 
+##################################################################################
+
+# https://www.activestate.com/resources/quick-reads/how-to-install-python-packages-using-a-script/
 # pyinstaller --onefile main.py
+
+##################################################################################
 
 alpha = "abcdefghijklmnopqrstuvwyz"
 
+##################################################################################
 
 def start():
     global land, size, visLand, mines, difficulty
     #-----------------------------------------------------------------------------
-    print("\nThis program allows you to see how minesweeper works\n")
-    size = int(input("Size (e.g.: 5): "))
+    size = int(input("\nSize (e.g.: 5): "))
     #-----------------------------------------------------------------------------
     land = []
     visLand = []  # visible land
