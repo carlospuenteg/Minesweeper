@@ -1,7 +1,14 @@
 import random
 import time
-from colorama import init, Fore, Back
-init(autoreset=True)
+try:
+    from colorama import init, Fore, Back
+    init(autoreset=True)
+    blue = Fore.LIGHTCYAN_EX
+    red = Fore.LIGHTRED_EX
+    green = Fore.GREEN
+    res = Fore.RESET
+except:
+    blue = red = green = res = ""
 
 # pyinstaller --onefile main.py
 
@@ -56,7 +63,7 @@ def visualize(land,size):
         vis += alpha[x].upper() + " |"
         for y in range(size):
             if (str(land[x][y]) == "�"): vis += (" " + str(land[x][y]) + " ")
-            else: vis += (" " + Fore.LIGHTCYAN_EX+str(land[x][y]) + Fore.RESET + " ")
+            else: vis += (" " + blue+str(land[x][y]) + res + " ")
         vis += "|\n"
     print(vis)
 
@@ -116,7 +123,7 @@ def playGame():
     play = True
     while play:
         visualize(visLand,size)
-        print("\nThere are "+Fore.LIGHTCYAN_EX+str(mines)+Fore.RESET+" mines\n")
+        print("\nThere are "+blue+str(mines)+res+" mines\n")
         while True:
             loc = input("What location do you want to choose? (e.g. Aa): ").lower()
             loc_x = alpha.index(loc[0])
@@ -129,7 +136,7 @@ def playGame():
         if (visLand[loc_x][loc_y] == "�"):
             if (land[loc_x][loc_y] == "⨀"):
                 play = False
-                print("\n"+Fore.LIGHTRED_EX+"YOU LOST \n")
+                print("\n"+red+"YOU LOST \n")
             else:
                 visLand[loc_x][loc_y] = land[loc_x][loc_y]
         else:
@@ -141,7 +148,7 @@ def playGame():
                 if (visLand[x][y] == "�"): locLeft += 1
         if (locLeft == mines):
             visualize(visLand,size)
-            print("\n"+Fore.GREEN+"YOU WON!\n")
+            print("\n"+green+"YOU WON!\n")
             play = False
 
 
