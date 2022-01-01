@@ -1,0 +1,12 @@
+https://ahmadawais.com/install-pip-macos-os-x-python/
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    python get-pip.py
+
+https://www.csestack.org/python-list-installed-modules-versions-pip/
+    pip list
+
+https://stackoverflow.com/questions/55920419/how-to-write-to-command-line-using-python
+
+pip uninstall <module_name>
+import pip
+pip.main(['install','colorama'])
